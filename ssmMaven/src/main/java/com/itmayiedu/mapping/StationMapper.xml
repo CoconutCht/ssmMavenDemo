@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itmayiedu.dao.StationMapper" >
+  <resultMap id="BaseResultMap" type="com.itmayiedu.model.Station" >
+    <id column="station_id" property="stationId" jdbcType="INTEGER" />
+    <result column="trainNum" property="trainnum" jdbcType="VARCHAR" />
+    <result column="station" property="station" jdbcType="VARCHAR" />
+    <result column="outTime" property="outtime" jdbcType="VARCHAR" />
+    <result column="dayTime" property="daytime" jdbcType="INTEGER" />
+    <result column="statiPrice" property="statiprice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    station_id, trainNum, station, outTime, dayTime, statiPrice
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from station
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </select>
+    <select id="findByStation" resultMap="BaseResultMap" parameterType="com.itmayiedu.model.Station" >
+ select   <include refid="Base_Column_List" /> from station where trainNum=#{trainnum}  and station=#{station};
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from station
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itmayiedu.model.Station" >
+    insert into station (station_id, trainNum, station, 
+      outTime, dayTime, statiPrice
+      )
+    values (#{stationId,jdbcType=INTEGER}, #{trainnum,jdbcType=VARCHAR}, #{station,jdbcType=VARCHAR}, 
+      #{outtime,jdbcType=VARCHAR}, #{daytime,jdbcType=INTEGER}, #{statiprice,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itmayiedu.model.Station" >
+    insert into station
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="trainnum != null" >
+        trainNum,
+      </if>
+      <if test="station != null" >
+        station,
+      </if>
+      <if test="outtime != null" >
+        outTime,
+      </if>
+      <if test="daytime != null" >
+        dayTime,
+      </if>
+      <if test="statiprice != null" >
+        statiPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stationId != null" >
+        #{stationId,jdbcType=INTEGER},
+      </if>
+      <if test="trainnum != null" >
+        #{trainnum,jdbcType=VARCHAR},
+      </if>
+      <if test="station != null" >
+        #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="outtime != null" >
+        #{outtime,jdbcType=VARCHAR},
+      </if>
+      <if test="daytime != null" >
+        #{daytime,jdbcType=INTEGER},
+      </if>
+      <if test="statiprice != null" >
+        #{statiprice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itmayiedu.model.Station" >
+    update station
+    <set >
+      <if test="trainnum != null" >
+        trainNum = #{trainnum,jdbcType=VARCHAR},
+      </if>
+      <if test="station != null" >
+        station = #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="outtime != null" >
+        outTime = #{outtime,jdbcType=VARCHAR},
+      </if>
+      <if test="daytime != null" >
+        dayTime = #{daytime,jdbcType=INTEGER},
+      </if>
+      <if test="statiprice != null" >
+        statiPrice = #{statiprice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itmayiedu.model.Station" >
+    update station
+    set trainNum = #{trainnum,jdbcType=VARCHAR},
+      station = #{station,jdbcType=VARCHAR},
+      outTime = #{outtime,jdbcType=VARCHAR},
+      dayTime = #{daytime,jdbcType=INTEGER},
+      statiPrice = #{statiprice,jdbcType=DOUBLE}
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </update>
+</mapper>
